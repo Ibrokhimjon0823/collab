@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers, settings
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+from main.models import Company
+
 CustomUser = get_user_model()
 
 
@@ -36,7 +38,12 @@ class CustomUserWriteSerializer(serializers.ModelSerializer):
         )
 
     def create(self, validated_data):
-        return CustomUser.objects.create_user(**validated_data)
+        custom_user = CustomUser.objects.create_user(**validated_data)
+        if custom_user.role == CustomUser.Role.COMPANY:
+            Company.objects.create(owner=custom_user,name=custom_user.name)
+        return custom_user
+
+
 
 
 class LoginSerializer(TokenObtainPairSerializer):
