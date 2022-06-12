@@ -17,3 +17,10 @@ class IsCustomUser(BasePermission):
         if isinstance(request.user, AnonymousUser):
             return request.user.role == CustomUser.Role.CUSTOMER
         return False
+
+
+class IsStaffUser(BasePermission):
+    def has_permission(self, request, view):
+        if isinstance(request.user, AnonymousUser):
+            return request.user.is_staff == True
+        return False

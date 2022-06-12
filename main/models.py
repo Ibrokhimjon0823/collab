@@ -85,7 +85,8 @@ class Request(BaseModel):
         Company,
         verbose_name=_("Companies"),
         related_name="requests",
-        related_query_name="request"
+        related_query_name="request",
+        null=True
     )
     country = models.CharField(_("Country"), max_length=60)
     city = models.CharField(_("City"), max_length=60)

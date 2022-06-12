@@ -46,6 +46,8 @@ class CustomUserWriteSerializer(serializers.ModelSerializer):
 
 
 
+
+
 class LoginSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         tokens = super().validate(attrs)

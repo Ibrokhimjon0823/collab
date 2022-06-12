@@ -1,8 +1,16 @@
 from django.urls import path
+from rest_framework.routers import SimpleRouter
 
-from . import views
+from main import views
+from .views import RequestViewSet
+from .views.rating import RatingViewSet
 
-urlpatterns = [
+router = SimpleRouter()
+router.register(r'rating', RatingViewSet, basename="rating")
+router.register(r'request', RequestViewSet, basename="request")
+urlpatterns = router.urls
+
+urlpatterns += [
     path("service/", views.ServiceListCreateView.as_view(), name="service-list-create"),
     path(
         "service/<int:pk>/",
