@@ -1,11 +1,14 @@
 from rest_framework import generics
+from main.serailizers import company
+
+from users import permissions as user_permissions
+from rest_framework.permissions import IsAuthenticated
+from main import models
 
 
-# class CompanyListView(generics.ListCreateAPIView):
-#     serializer_class = service.ServiceSerializer
-#     permission_classes = [user_permissions.IsCompanyUser]
-#
-#     def get_queryset(self):
-#         return models.Service.objects.select_related("company").filter(
-#             company=self.request.user.company
-#         )
+class CompanyListView(generics.ListAPIView):
+    serializer_class = company.CompanySerializer
+    # permission_classes = [IsAuthenticated]
+    permission_classes = [user_permissions.IsStaffUser]
+    queryset = models.Company.objects.all()
+

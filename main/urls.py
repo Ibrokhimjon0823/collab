@@ -17,4 +17,5 @@ urlpatterns += [
         views.ServiceRetrieveUpdateDeleteView.as_view(),
         name="service-retrieve-update-delete",
     ),
+    path('company/', views.CompanyListView.as_view(), name="company-list"),
 ]

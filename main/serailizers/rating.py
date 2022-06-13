@@ -26,7 +26,7 @@ class RatingCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Rating
-        fields = ('id', 'company', 'customer','rating', 'comment')
+        fields = ('id', 'company', 'customer', 'rating', 'comment')
 
 
 class RatingGetSerializer(serializers.ModelSerializer):

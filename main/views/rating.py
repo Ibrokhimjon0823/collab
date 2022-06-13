@@ -7,7 +7,6 @@ from main.serailizers.rating import RatingCreateSerializer, RatingGetSerializer
 class RatingViewSet(ModelViewSet):
     queryset = Rating.objects.all()
 
-
     def get_serializer_class(self):
         serializer_mappings = {
             'create': RatingCreateSerializer,
