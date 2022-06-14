@@ -50,5 +50,5 @@ class RequestSerializer(serializers.ModelSerializer):
         request = Request.objects.create(**validated_data)
         request.companies.add(*companies)
         for company in request.companies.all():
-            Notification.objects.create(company=company,request=request)
+            Notification.objects.create(company=company, request=request)
         return request
