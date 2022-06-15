@@ -27,6 +27,7 @@ class RequestSerializer(serializers.ModelSerializer):
 
     def to_internal_value(self, data):
         request = self.context.get('request')
+        data._mutable = True
         data['customer'] = request.user.id
         return super().to_internal_value(data)
 

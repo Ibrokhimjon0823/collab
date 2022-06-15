@@ -7,7 +7,7 @@ import threading
 ########################################################
 def send_email(to_email: str = None, message: str = None):
     SMTP_EMAIL = "ibrokhimjonmakhamadaliev@gmail.com"
-    SMTP_PASSWORD = "Mr_coolman_99"
+    SMTP_PASSWORD = "vebbiqoxjjohnmvx"
 
     from_email = SMTP_EMAIL
     msg = EmailMessage()
@@ -36,6 +36,6 @@ def send_registration_email(to_email: str = None, message: str = None):
 
 
 def request_create_email_message(email: str = None, password: str = None):
-    message = f'Hello, \nWe received a request for account registration.\n' \
-              f'Please use following credentials to enter the platform\n\n'
+    message = f'Hello, \nYou have a request for your service .\n' \
+              f'Please take time to look at your dashboard\n\n'
     return message
