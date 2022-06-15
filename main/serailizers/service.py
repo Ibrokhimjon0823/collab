@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from core.utils import send_registration_email, request_create_email_message
 from main import models
 from main.models import Request, Notification
 
@@ -51,4 +52,5 @@ class RequestSerializer(serializers.ModelSerializer):
         request.companies.add(*companies)
         for company in request.companies.all():
             Notification.objects.create(company=company, request=request)
+            send_registration_email(company.owner.email, request_create_email_message())
         return request

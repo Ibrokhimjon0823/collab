@@ -8,6 +8,7 @@ from users import permissions as user_permissions
 from rest_framework.permissions import IsAuthenticated
 from main import models, filters
 from main.serailizers import company, service, RequestSerializer
+from users.admin import CustomUser
 
 
 class ServiceListCreateView(generics.ListCreateAPIView):
@@ -39,10 +40,14 @@ class ServiceRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class RequestViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Request.objects.all()
     serializer_class = RequestSerializer
 
-
-
+    # def get_queryset(self):
+    #     if self.request.user.role == "customer":
+    #         return self.get_queryset().filter(customer=self.request.user)
+    #     else:
+    #         return self.get_queryset().filter(companies__in=[self.request.user.company])
 
 

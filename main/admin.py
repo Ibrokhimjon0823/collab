@@ -54,6 +54,9 @@ class RatingAdmin(admin.ModelAdmin):
 
 @admin.register(models.Request)
 class RequestAdmin(admin.ModelAdmin):
+    def get_queryset(self, request):
+        qs = super(RequestAdmin, self).get_queryset(request)
+        return qs.filter(companies=request.user.company)
     list_display = ("customer", "status")
     list_filter = ("status",)
     filter_horizontal = ("companies",)
