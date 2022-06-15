@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework import generics, status
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -47,11 +48,11 @@ class RequestViewSet(ModelViewSet):
     queryset = Request.objects.all()
     serializer_class = RequestSerializer
 
-    # def get_queryset(self):
-    #     if self.request.user.role == "customer":
-    #         return self.get_queryset().filter(customer=self.request.user)
-    #     else:
-    #         return self.get_queryset().filter(companies__in=[self.request.user.company])
+    def get_queryset(self):
+        if self.request.user.role == "customer":
+            return self.queryset.filter(customer=self.request.user)
+        else:
+            return self.queryset.filter(Q(service__company=self.request.user.company) | Q(customer=self.request.user))
 
     @action(methods=['POST'], detail=True, url_name='status-change', url_path='status-change')
     def status_change(self, request, *args, **kwargs):
