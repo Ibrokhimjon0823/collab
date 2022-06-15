@@ -10,12 +10,7 @@ class ServiceInline(admin.TabularInline):
     show_change_link = True
 
 
-class RequestInline(admin.TabularInline):
-    model = models.Request.companies.through
-    extra = 0
-    show_change_link = True
-    verbose_name = _("request")
-    verbose_name_plural = _("requests")
+
 
 
 class NotificationInline(admin.TabularInline):
@@ -28,7 +23,7 @@ class NotificationInline(admin.TabularInline):
 class CompanyAdmin(admin.ModelAdmin):
     list_display = ("owner", "name")
     date_hierarchy = "created_at"
-    inlines = (ServiceInline, RequestInline, NotificationInline)
+    inlines = (ServiceInline, NotificationInline)
     search_fields = ("name", "owner__email")
 
 
@@ -59,7 +54,7 @@ class RequestAdmin(admin.ModelAdmin):
         return qs.filter(companies=request.user.company)
     list_display = ("customer", "status")
     list_filter = ("status",)
-    filter_horizontal = ("companies",)
+    # filter_horizontal = ("companies",)
     date_hierarchy = "created_at"
 
 

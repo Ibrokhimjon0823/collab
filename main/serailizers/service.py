@@ -35,7 +35,7 @@ class RequestSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'customer',
-            'companies',
+            'service',
             'country',
             'city',
             'street',
@@ -47,10 +47,16 @@ class RequestSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        companies = validated_data.pop('companies')
         request = Request.objects.create(**validated_data)
-        request.companies.add(*companies)
-        for company in request.companies.all():
-            Notification.objects.create(company=company, request=request)
-            send_registration_email(company.owner.email, request_create_email_message())
+        Notification.objects.create(company=request.service.company, request=request)
+        send_registration_email(request.service.company.owner.email, request_create_email_message())
         return request
+
+
+class StatusChangeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Request
+        fields = ['status']
+        extra_kwargs = {
+            'status': {'required': True}
+        }

@@ -81,13 +81,7 @@ class Request(BaseModel):
         limit_choices_to={"role": "customer"},
         verbose_name=_("Customer")
     )
-    companies = models.ManyToManyField(
-        Company,
-        verbose_name=_("Companies"),
-        related_name="requests",
-        related_query_name="request",
-        null=True
-    )
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, related_name='requests')
     country = models.CharField(_("Country"), max_length=60)
     city = models.CharField(_("City"), max_length=60)
     street = models.CharField(_("Street"), max_length=60)
@@ -103,6 +97,10 @@ class Request(BaseModel):
     area = models.DecimalField(
         _("Area"), max_digits=10, decimal_places=2, validators=[MinValueValidator(0)]
     )
+
+    @property
+    def total_cost(self):
+        return self.service.price * self.duration
 
     class Meta:
         verbose_name = _("Request")
